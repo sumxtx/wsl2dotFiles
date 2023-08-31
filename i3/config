@@ -1,0 +1,144 @@
+exec --no-startup-id dex --autostart --environment i3
+#exec feh --bg-fill '' --bg-fill '
+#exec picom --config /home/archwsl/.config/picom/picom.conf --daemon
+set $mod Mod1
+
+workspace_layout tabbed
+hide_edge_borders both
+gaps inner 8
+gaps outer 1
+new_window pixel 4
+default_border pixel 4
+
+font pango:JetBrainsMono Nerd Font Regular 10
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# start a terminal
+bindsym $mod+Return exec kitty
+
+# kill focused window
+bindsym $mod+q kill
+
+# start rofi
+#bindsym $mod+d exec --rofi -modi drun -show drun -config ~/.config/rofi/rofidmenu.rasi
+bindsym $mod+d exec --no-startup-id rofi -show run
+bindsym $mod+Shift+d exec --no-startup-id rofi -show window
+
+# change focus
+bindsym $mod+h focus left
+bindsym $mod+k focus down
+bindsym $mod+j focus up
+bindsym $mod+l focus right
+
+# move windows in workspace
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+
+# split in horizontal orientation
+bindsym $mod+b split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+Shift+Tab focus mode_toggle
+
+# switch to workspace
+bindsym $mod+y	workspace $ws1
+bindsym $mod+u 	workspace $ws2
+bindsym $mod+i 	workspace $ws3
+bindsym $mod+o 	workspace $ws4
+bindsym $mod+p 	workspace $ws5
+
+# move focused container to workspace
+bindsym $mod+Shift+y move container	to workspace $ws1
+bindsym $mod+Shift+u move container to workspace $ws2
+bindsym $mod+Shift+i move container to workspace $ws3
+bindsym $mod+Shift+o move container to workspace $ws4
+bindsym $mod+Shift+p move container to workspace $ws5
+
+set $ws1 "y : "
+set $ws2 "u : "
+set $ws3 "i : "
+set $ws4 "o : "
+set $ws5 "p : "
+
+assign [class="(?i)kitty"] $ws1
+for_window [class="(?i)kitty"] focus
+
+#assign [class="(?i)] $ws1
+
+#floating rules
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+
+# exit i3 (logs you out of your X session)
+bindsym $mod+Shift+x exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing + will grow the window’s width.
+        # Pressing - will shrink the window’s width.
+        # Pressing kpd+ will grow the window’s height.
+        # Pressing kpd- will shrink the window’s height.
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+
+        # back to normal: Enter or Escape or $mod+r
+        #bindsym Return mode "default"
+        bindsym Escape mode "default"
+        #bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+
+#Define colors
+
+
+# Start i3bar to display a workspace bar (plus the system information i3status
+# finds out, if available)
+bar {
+  #status_command i3status -c /home/v3n0m/.config/i3/i3status/mybar.sh
+	status_command i3status -c ~/.config/i3/i3status.conf
+  tray_output primary
+	position bottom
+  strip_workspace_numbers no
+
+
+  colors {
+    separator   #000000
+    background  #0c1011
+    statusline  #12dbe2
+    active_workspace #528d96 #528d96 #000000 #ffffff
+    focused_workspace #528d96 #528d96 #000000 #ffffff
+    inactive_workspace #000000 #000000 #ffffff #ffffff
+    }
+}
+
+client.focused #528d96 #528d96 #ffffff #528d96 #528d96
+client.focused_inactive #504945 #504945 #928374 #3c3836 #504945
+client.unfocused #32302f #32302f #ffffff #282828 #32302f
+client.placeholder #1d2021 #1d2021 #928374 #1d2021 #1d2021
+client.urgent #cc241d #cc241d #ebdbb2 #282828 #cc241d
+
